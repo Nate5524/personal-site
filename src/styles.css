@@ -1,1 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face{
+    font-family: aurebesh;
+    src: url(assets/AUREBESH.OTF);
+}
+
+@font-face{
+    font-family: bebas;
+    src: url(assets/BebasNeue-Regular.ttf);
+}
+
+.aurebesh{
+    font-family: aurebesh;
+}
+
+.bebas{
+    font-family: bebas;
+}
+
+body{
+    margin: 0px;
+}
