@@ -29,9 +29,11 @@
     align-items: flex-end;
 }
 
-#links>p{
+#links>a, #links>p{
     margin: 5px;
     font-size: x-large;
+    color: #FDF0D1;
+    text-decoration: none;
 }
 
 #toolbar{
@@ -39,25 +41,9 @@
     justify-content: space-between;
     background-color: #643843;
     padding: 0px;
+
 }
 
-/*
-c1= #643843
-c2= #85586F
-c3= #AC7D88
-
-#fdf0d1
-#cfc2a5
-#b3a586
-#635941
-
-#dbdbdb
-#aaaaaa
-#616161
-
-
-#283618
-#606c38
-
-This is a change, I'm going to push it.
-*/
+.emphasisLine{
+    border: 2px solid var(--mid-maroon);
+}

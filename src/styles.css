@@ -1,3 +1,27 @@
+:root{
+    --dark-purple: #31263eff;
+    --pomp-and-power: #a167a5ff;
+    --khaki: #bfada3ff;
+    --viridian: #56876dff;
+    --dark-spring-green: #04724dff;
+    
+    --base-maroon: #643843;
+    --mid-maroon: #85586F;
+    --light-maroon: #ac7d88;
+
+    --dark-tan: #635941;
+    --mid-tan: #b3a586;
+    --light-tan: #cfc2a5;
+    --white-tan: #fdf0d1;
+
+    --light-gray: #dbdbdb;
+    --mid-gray: #aaaaaa;
+    --dark-gray: #616161;
+
+    --dark-green: #283618;
+    --mid-green: #606c38;
+    }
+
 @font-face{
     font-family: aurebesh;
     src: url(assets/AUREBESH.OTF);
@@ -18,4 +42,10 @@
 
 body{
     margin: 0px;
+    background-color: #b3a586;
+}
+
+.borderless{
+    margin: 0px;
+    padding: 0px;
 }

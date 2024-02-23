@@ -1,0 +1,9 @@
+#word{
+    display: flex;
+    --hovered: 0;
+    width: 0;
+  }
+  
+  #word:hover{
+    --hovered: 1;
+  }
