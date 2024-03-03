@@ -13,11 +13,11 @@ export class ExperienceComponent implements OnInit{
   constructor() { }
 
   ngOnInit() {  
-  const word = document.getElementById("word");
+  const word = document.getElementById("wordHitbox");
   if (word == null) {
     throw new Error("No word found");
   }
-  var letters = word.getElementsByTagName("p");
+  var letters = word.getElementsByTagName("h3");
 
   var timeHovered = 0;
 

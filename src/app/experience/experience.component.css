@@ -1,9 +1,10 @@
-#word{
+#wordHitbox{
     display: flex;
     --hovered: 0;
-    width: 0;
+    width:130px;
+    height: 56px;
   }
   
-  #word:hover{
+  #wordHitbox:hover{
     --hovered: 1;
   }
