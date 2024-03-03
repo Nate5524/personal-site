@@ -28,7 +28,7 @@ export class ExperienceComponent implements OnInit{
       }
       for (let i = 0; i < letters.length; i++) {
         if (timeHovered > i) {
-          letters[i].style.fontFamily = "aurebesh";
+          letters[i].style.fontFamily = "bebas";
         }
       }
     } else {
@@ -37,7 +37,7 @@ export class ExperienceComponent implements OnInit{
       }
       for (let i = 0; i < letters.length; i++) {
         if (timeHovered < i) {
-          letters[letters.length - 1 - i].style.fontFamily = "bebas";
+          letters[letters.length - 1 - i].style.fontFamily = "aurebesh";
         }
       }
     }
