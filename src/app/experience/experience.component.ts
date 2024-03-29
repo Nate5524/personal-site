@@ -18,7 +18,7 @@ export class ExperienceComponent implements OnInit{
   if (word != null){
     const letters = word.getElementsByTagName("h3");
     if (letters != null){
-      FontTransformations.toggleFontIfHovered(word, letters, "aurebesh", "bebas");
+      word.addEventListener("mouseenter", ()=> {FontTransformations.toggleFont(letters, "aurebesh", "bebas");});
     }
   }
   }

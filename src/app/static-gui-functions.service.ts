@@ -24,8 +24,4 @@ export class FontTransformations{
       i++;
     }, 60);
   }
-  
-  static toggleFontIfHovered(word:HTMLElement, letters:HTMLCollectionOf<HTMLElement>, font1:string, font2:string){
-    word.addEventListener("mouseenter", ()=> {FontTransformations.toggleFont(letters, font1, font2);});
-  }
 }
