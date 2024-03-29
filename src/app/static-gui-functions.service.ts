@@ -26,13 +26,6 @@ export class FontTransformations{
   }
   
   static toggleFontIfHovered(word:HTMLElement, letters:HTMLCollectionOf<HTMLElement>, font1:string, font2:string){
-    let prevState = "0";
-  setInterval(function(){
-    let currState = getComputedStyle(word).getPropertyValue('--hovered');
-    if(currState == "1" && prevState !="1"){
-      FontTransformations.toggleFont(letters, font1, font2);
-    }
-    prevState = currState;
-  }, 50)
+    word.addEventListener("mouseenter", ()=> {FontTransformations.toggleFont(letters, font1, font2);});
   }
 }
