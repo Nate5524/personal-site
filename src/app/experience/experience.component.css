@@ -1,10 +1,11 @@
-#wordHitbox{
+#word{
     display: flex;
     --hovered: 0;
-    width:130px;
-    height: 56px;
+    width: fit-content;
+    height: fit-content;
+    font-family: "bebas";
   }
   
-  #wordHitbox:hover{
+  #word:hover{
     --hovered: 1;
   }

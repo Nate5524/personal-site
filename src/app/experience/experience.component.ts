@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
+import { FontTransformations } from '../static-gui-functions.service';
 
 @Component({
   selector: 'app-experience',
@@ -12,36 +13,14 @@ export class ExperienceComponent implements OnInit{
 
   constructor() { }
 
-  ngOnInit() {  
-  const word = document.getElementById("wordHitbox");
-  if (word == null) {
-    throw new Error("No word found");
-  }
-  var letters = word.getElementsByTagName("h3");
-
-  var timeHovered = 0;
-
-  setInterval(function () {
-    if (getComputedStyle(word).getPropertyValue("--hovered") == "1") {
-      if (timeHovered <= letters.length) {
-        timeHovered += 1;
-      }
-      for (let i = 0; i < letters.length; i++) {
-        if (timeHovered > i) {
-          letters[i].style.fontFamily = "bebas";
-        }
-      }
-    } else {
-      if (timeHovered >= -1) {
-        timeHovered -= 1;
-      }
-      for (let i = 0; i < letters.length; i++) {
-        if (timeHovered < i) {
-          letters[letters.length - 1 - i].style.fontFamily = "aurebesh";
-        }
-      }
+  ngOnInit() {
+  const word = document.getElementById("word")
+  if (word != null){
+    const letters = word.getElementsByTagName("h3");
+    if (letters != null){
+      FontTransformations.toggleFontIfHovered(word, letters, "aurebesh", "bebas");
     }
-  }, 50);
+  }
   }
 }
 
