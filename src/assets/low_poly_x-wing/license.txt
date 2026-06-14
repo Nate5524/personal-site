@@ -1,0 +1,11 @@
+Model Information:
+* title:	Low Poly X-Wing
+* source:	https://sketchfab.com/3d-models/low-poly-x-wing-9eb1841d367d431cbf1c17f7b29c546c
+* author:	felipelunardelli (https://sketchfab.com/felipelunardelli)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Low Poly X-Wing" (https://sketchfab.com/3d-models/low-poly-x-wing-9eb1841d367d431cbf1c17f7b29c546c) by felipelunardelli (https://sketchfab.com/felipelunardelli) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
