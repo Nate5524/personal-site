@@ -16,6 +16,25 @@ export class ManagedObject3D {
       this.animationManager.update(delta);
     }
   }
+
+  renderDirectionVectors(){
+    const dirX = new THREE.Vector3(1, 0, 0).normalize();
+    const dirY = new THREE.Vector3(0, 1, 0).normalize();
+    const dirZ = new THREE.Vector3(0, 0, 1).normalize();
+
+    // 2. Set the starting origin at the object's local center
+    const origin = new THREE.Vector3(0, 0, 0);
+
+    // 3. Create Arrow Helpers (length = 2 units)
+    const arrowX = new THREE.ArrowHelper(dirX, origin, 2, 0xff0000); 
+    const arrowY = new THREE.ArrowHelper(dirY, origin, 2, 0x00ff00);
+    const arrowZ = new THREE.ArrowHelper(dirZ, origin, 2, 0x0000ff);
+
+    // 4. Attach arrows directly to your object
+    this.object.add(arrowX);
+    this.object.add(arrowY);
+    this.object.add(arrowZ);
+  }
 }
 
 export class ManagedGltf extends ManagedObject3D {
