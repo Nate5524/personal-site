@@ -20,17 +20,7 @@ let sceneManager = new SceneManager();
 // sceneManager.register(new TestObject());
 
 let gltf = await ManagedGltf.createFromFile("src/assets/low_poly_x-wing/scene.gltf");
-gltf.object.traverse((child) => {
-  if (child instanceof THREE.Mesh) {
-    const edges = new THREE.EdgesGeometry(child.geometry);
-    const wireframe = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0xffffff }));
-    wireframe.position.copy(child.position);
-    wireframe.quaternion.copy(child.quaternion);
-    wireframe.scale.copy(child.scale);
-    child.parent?.add(wireframe);
-    child.visible = false;
-  }
-});
+gltf.wireframe();
 
 gltf.renderDirectionVectors();
 gltf.object.translateY(3).translateZ(-10);

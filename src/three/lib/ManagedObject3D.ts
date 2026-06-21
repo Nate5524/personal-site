@@ -35,6 +35,20 @@ export class ManagedObject3D {
     this.object.add(arrowY);
     this.object.add(arrowZ);
   }
+
+  wireframe(){
+    this.object.traverse((child) => {
+      if (child instanceof THREE.Mesh) {
+        const edges = new THREE.EdgesGeometry(child.geometry);
+        const wireframe = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0xffffff }));
+        wireframe.position.copy(child.position);
+        wireframe.quaternion.copy(child.quaternion);
+        wireframe.scale.copy(child.scale);
+        child.parent?.add(wireframe);
+        child.visible = false;
+      }
+    });
+  }
 }
 
 export class ManagedGltf extends ManagedObject3D {
