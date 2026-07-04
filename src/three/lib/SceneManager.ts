@@ -6,27 +6,39 @@ import { ManagedRenderer } from "./ManagedRenderer";
 import * as THREE from "three";
 
 export class SceneManager {
-  protected camera: ManagedCamera<THREE.Camera>;
-  protected scene: ManagedScene;
-  protected renderer: ManagedRenderer;
+  protected _camera: ManagedCamera<THREE.Camera>;
+  protected _scene: ManagedScene;
+  protected _renderer: ManagedRenderer;
   protected registeredObjects: ManagedObject3D[] = [];
   private lastFrameTime = 0;
 
   shouldPreserveScaleOnResize = true;
 
   constructor(camera?: ManagedCamera<THREE.Camera>, scene?: ManagedScene, renderer?: ManagedRenderer) {
-    this.camera = camera ?? ManagedPerspectiveCamera.createManagedPerspectiveCamera();
-    this.scene = scene ?? ManagedScene.createSimpleScene();
+    this._camera = camera ?? ManagedPerspectiveCamera.createManagedPerspectiveCamera();
+    this._scene = scene ?? ManagedScene.createSimpleScene();
     if (renderer) {
-      this.renderer = renderer;
+      this._renderer = renderer;
     } else {
-      this.renderer = ManagedRenderer.createManagedWebGlRenderer();
+      this._renderer = ManagedRenderer.createManagedWebGlRenderer();
       this.renderer.setSize(window.innerWidth, window.innerHeight);
     }
-    document.body.appendChild(this.renderer.renderer.domElement);
+    document.body.appendChild(this.renderer.domElement);
     window.addEventListener("resize", (event) => this.onWindowResize(event));
     this.setAnimationLoop();
-    this.scene.scene.background = new THREE.Color("#888888"); // TODO remove this temp line
+    this.scene.background = new THREE.Color("#888888"); // TODO remove this temp line
+  }
+
+  get camera(){
+    return this._camera.camera;
+  }
+
+  get renderer(){
+    return this._renderer.renderer;
+  }
+
+  get scene(){
+    return this._scene.scene;
   }
 
   private setAnimationLoop() {
@@ -42,7 +54,7 @@ export class SceneManager {
 
   register(...object: ManagedObject3D[]): void {
     this.registeredObjects.push(...object);
-    this.scene.add(...object);
+    this._scene.add(...object);
   }
 
   async registerGltfFromFile(path: string): Promise<ManagedGltf> {
@@ -62,7 +74,7 @@ export class SceneManager {
   }
 
   render() {
-    this.renderer.render(this.scene.scene, this.camera.camera);
+    this.renderer.render(this.scene, this.camera);
   }
 
   onWindowResize(_event: Event) {
@@ -72,6 +84,6 @@ export class SceneManager {
   }
 
   preserveScaleOnResize() {
-    this.camera.preserveScaleAfterResize();
+    this._camera.preserveScaleAfterResize();
   }
 }

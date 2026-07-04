@@ -17,6 +17,8 @@ class TestObject extends ManagedObject3D {
 }
 
 let sceneManager = new SceneManager();
+
+sceneManager.camera.translateY(5)
 // sceneManager.register(new TestObject());
 
 let gltf = await ManagedGltf.createFromFile("src/assets/low_poly_x-wing/scene.gltf");
@@ -39,14 +41,14 @@ gltf.object.rotateY(Math.PI);
 gltf.animationManager.playAll();
 
 //  point light
-const pointLight = new ManagedLight(new THREE.PointLight(0xffffff, 200));
-let elapsed = 0;
-pointLight.animationManager.addProcedural("orbit", (delta) => {
-  elapsed += delta;
-  pointLight.object.position.setX((elapsed * 10) % 10);
-});
-sceneManager.register(pointLight);
-pointLight.animationManager.play("orbit");
+// const pointLight = new ManagedLight(new THREE.PointLight(0xffffff, 200));
+// let elapsed = 0;
+// pointLight.animationManager.addProcedural("orbit", (delta) => {
+//   elapsed += delta;
+//   pointLight.object.position.setX((elapsed * 10) % 10);
+// });
+// sceneManager.register(pointLight);
+// pointLight.animationManager.play("orbit");
 
 // plane
 const gridColor = new THREE.Color(0x990000);
