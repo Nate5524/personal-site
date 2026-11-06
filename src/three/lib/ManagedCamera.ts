@@ -1,10 +1,13 @@
 import * as THREE from "three";
+import type { Logger } from "./Logger";
 
 export abstract class ManagedCamera<T extends THREE.Camera> {
   readonly camera: T;
+  readonly logger: Logger | undefined;
 
-  constructor(camera: T) {
+  constructor(camera: T, logger?: Logger) {
     this.camera = camera;
+    this.logger = logger;
   }
 
   lookAt(vector: THREE.Vector3) {
@@ -14,12 +17,20 @@ export abstract class ManagedCamera<T extends THREE.Camera> {
   abstract preserveScaleAfterResize(): void;
 }
 
+export interface PerspectiveCameraOptions {
+  fov?: number;
+  aspect?: number;
+  near?: number;
+  far?: number;
+  logger?: Logger;
+}
+
 export class ManagedPerspectiveCamera extends ManagedCamera<THREE.PerspectiveCamera> {
   private readonly initTanFOV: number;
   private readonly initWindowHeight: number;
 
-  constructor(camera: THREE.PerspectiveCamera) {
-    super(camera);
+  constructor(camera: THREE.PerspectiveCamera, logger?: Logger) {
+    super(camera, logger);
     this.initTanFOV = Math.tan(((Math.PI / 180) * camera.fov) / 2);
     this.initWindowHeight = window.innerHeight;
   }
@@ -28,17 +39,26 @@ export class ManagedPerspectiveCamera extends ManagedCamera<THREE.PerspectiveCam
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.fov = (360 / Math.PI) * Math.atan(this.initTanFOV * (window.innerHeight / this.initWindowHeight));
     this.camera.updateProjectionMatrix();
+    this.logger?.debug(`Updated camera for new window size ${window.innerWidth} x ${window.innerHeight}`);
   }
 
-  static createManagedPerspectiveCamera(fov: number = 75, aspect: number = window.innerWidth / window.innerHeight, near: number = 0.1, far: number = 1000): ManagedPerspectiveCamera {
+  static createManagedPerspectiveCamera(options: PerspectiveCameraOptions = {}): ManagedPerspectiveCamera {
+    const {
+      fov = 75,
+      aspect = window.innerWidth / window.innerHeight,
+      near = 0.1,
+      far = 1000,
+      logger,
+    } = options;
+
     const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-    return new ManagedPerspectiveCamera(camera);
+    return new ManagedPerspectiveCamera(camera, logger);
   }
 }
 
 export class ManagedOrthographicCamera extends ManagedCamera<THREE.OrthographicCamera> {
-  constructor(camera: THREE.OrthographicCamera) {
-    super(camera);
+  constructor(camera: THREE.OrthographicCamera, logger?: Logger) {
+    super(camera, logger);
   }
 
   preserveScaleAfterResize(): void {

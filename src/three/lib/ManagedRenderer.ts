@@ -1,21 +1,24 @@
 import * as THREE from "three";
 import { WebGPURenderer } from "three/webgpu";
+import type { Logger } from "./Logger";
 
 export type SupportedRenderer = THREE.WebGLRenderer | WebGPURenderer;
 
 export class ManagedRenderer {
   readonly renderer: SupportedRenderer;
+  readonly logger: Logger | undefined;
 
-  constructor(renderer: SupportedRenderer) {
+  constructor(renderer: SupportedRenderer, logger?:Logger) {
     this.renderer = renderer;
+    this.logger = logger;
   }
 
-  static createManagedWebGlRenderer(): ManagedRenderer {
-    return new ManagedRenderer(new THREE.WebGLRenderer());
+  static createManagedWebGlRenderer(logger?:Logger): ManagedRenderer {
+    return new ManagedRenderer(new THREE.WebGLRenderer(), logger);
   }
 
-  static createManagedWebGpuRenderer(): ManagedRenderer {
-    return new ManagedRenderer(new WebGPURenderer());
+  static createManagedWebGpuRenderer(logger?:Logger): ManagedRenderer {
+    return new ManagedRenderer(new WebGPURenderer(), logger);
   }
 
   render(scene: THREE.Scene, camera: THREE.Camera) {

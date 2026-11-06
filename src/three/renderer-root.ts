@@ -1,30 +1,30 @@
 import * as THREE from "three";
-import { ManagedGltf, ManagedLight, ManagedObject3D } from "./lib/ManagedObject3D";
+import { ManagedGltf } from "./lib/ManagedObject3D";
+import { InfiniteGrid } from "./objects/InfiniteGrid";
 import { SceneManager } from "./lib/SceneManager";
+import xwingUrl from "../assets/low_poly_x-wing/scene.gltf?url";
+import xwingBufferUrl from "../assets/low_poly_x-wing/scene.bin?url";
+import { Logger, LogLevel } from "./lib/Logger";
 
-class TestObject extends ManagedObject3D {
-  constructor() {
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshBasicMaterial({ color: 0x56789a });
-    super(new THREE.Mesh(geometry, material));
-    this.object.translateZ(-5);
-
-    this.animationManager.addProcedural("spin", (delta) => {
-      this.object.rotation.x += delta / 2;
-      this.object.rotation.y += delta;
-    });
-  }
-}
-
-let sceneManager = new SceneManager();
+const logger = new Logger(LogLevel.Debug)
+let sceneManager = new SceneManager({logger});
 
 sceneManager.camera.translateY(5)
-// sceneManager.register(new TestObject());
 
-let gltf = await ManagedGltf.createFromFile("src/assets/low_poly_x-wing/scene.gltf");
+const grid = new InfiniteGrid({ color: new THREE.Color(0x990000), cellSize: .5, size: 1000, logger});
+grid.animationManager.addProcedural("move", (delta) => {
+  grid.scroll(delta, 16);
+});
+grid.animationManager.playAll();
+sceneManager.register(grid);
+
+// The glTF references scene.bin; Vite emits that buffer with a hashed filename.
+const modelLoadingManager = new THREE.LoadingManager();
+modelLoadingManager.setURLModifier((url) => url.endsWith("/scene.bin") ? xwingBufferUrl : url);
+let gltf = await ManagedGltf.createFromFile(xwingUrl, modelLoadingManager, sceneManager.logger);
 gltf.wireframe();
 
-gltf.renderDirectionVectors();
+gltf.renderUnitVectors();
 gltf.object.translateY(3).translateZ(-10);
 // gltf.object.rotateY(Math.PI / 2);
 // gltf.object.rotateZ(Math.PI / 4);
@@ -49,16 +49,3 @@ gltf.animationManager.playAll();
 // });
 // sceneManager.register(pointLight);
 // pointLight.animationManager.play("orbit");
-
-// plane
-const gridColor = new THREE.Color(0x990000);
-const grid = new ManagedObject3D(new THREE.GridHelper(1000, 500, gridColor, gridColor));
-grid.object.translateY(-5).translateZ(-1).rotateX(0.5).translateZ(425);
-const startPos = grid.object.position.z;
-grid.animationManager.addProcedural("move", (delta) => {
-  grid.object.translateZ(16 * delta);
-  let diff = grid.object.position.z - startPos;
-  grid.object.translateZ(-Math.trunc(diff / 2) * 2);
-});
-grid.animationManager.playAll()
-sceneManager.register(grid);
